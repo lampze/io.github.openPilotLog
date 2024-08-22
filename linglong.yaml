@@ -1,0 +1,31 @@
+version: "1"
+
+package:
+  id: io.github.openPilotLog
+  name: openPilotLog
+  version: 0.0.0.1
+  kind: app
+  description: |
+    A FOSS pilot logbook
+
+command:
+  - /opt/apps/io.github.openPilotLog/files/bin/openPilotLog
+
+base: org.deepin.foundation/23.0.0
+runtime: org.deepin.Runtime/23.0.1
+
+sources:
+  - kind: git
+    url: https://github.com/fiffty-50/openPilotLog.git
+    version: master
+    commit: c40b89872eab5339d3cdff6f0ce3a4bb23953e5d
+
+build: |
+  cd /project/linglong/sources/openPilotLog.git
+  git apply ../../../0001-install.patch
+  git apply ../../../0002-install.patch
+  mkdir build
+  cd build
+  cmake .. \
+        -DCMAKE_INSTALL_PREFIX=${PREFIX}
+  cmake --build . --target install 
